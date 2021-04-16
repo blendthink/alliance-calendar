@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ./docker/python
+      dockerfile: Dockerfile
+    tty: true
+    working_dir: /app
+    environment:
+      TZ: Asia/Tokyo
+    volumes:
+     - ./app:/app
+    command: >
+      bash -c "
+        pip install --no-cache-dir -r requirements.txt &&
+        python main.py &&
+        /bin/bash
+      "
