@@ -10,10 +10,9 @@ services:
     environment:
       TZ: Asia/Tokyo
     volumes:
-     - ./app:/app
+      - ./app:/usr/src/app
     command: >
       bash -c "
-        pip install --no-cache-dir -r requirements.txt &&
         python main.py &&
         /bin/bash
       "
