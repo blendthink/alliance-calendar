@@ -6,7 +6,7 @@ services:
       context: ./docker/python
       dockerfile: Dockerfile
     tty: true
-    working_dir: /app
+    working_dir: /usr/src/app
     environment:
       TZ: Asia/Tokyo
     volumes:

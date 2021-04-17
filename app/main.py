@@ -1,14 +1,27 @@
-# This is a sample Python script.
+import os
+import requests
+from bs4 import BeautifulSoup
+import settings
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-import datetime
+
+def get_latest_image_url():
+    response = requests.get(settings.WORKPLACE_URL)
+    soup = BeautifulSoup(response.text, "html.parser")
+    images = soup.find("div", id="main").find("div", class_="calendar-box").find_all("img")
+    latest_index = len(images) - 1
+    return images[latest_index].get("src")
 
 
-def print_hi(name):
-    now = datetime.datetime.now()
-    print(f"Hi, {name}.  It's {now} now")
+def save_image(url):
+    response = requests.get(url)
+    base = os.path.dirname(os.path.abspath(__file__))
+    name = os.path.normpath(os.path.join(base, 'downloads/latest_image.png'))
+    file = open(f"{name}", "wb")
+    file.write(response.content)
+    file.close()
 
 
 if __name__ == '__main__':
-    print_hi('blendthink')
+    latest_image_url = get_latest_image_url()
+    print(latest_image_url)
+    save_image(latest_image_url)
