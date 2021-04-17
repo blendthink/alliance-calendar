@@ -7,6 +7,12 @@
 - python: 3.9.4-slim-buster
 - time zone: Asia/Tokyo
 
+### Remote Interpreter
+
+- [Download PyCharm Professional](https://www.jetbrains.com/ja-jp/pycharm/download/)
+- [Install Docker Desktop for Mac](https://docs.docker.com/docker-for-mac/install/)
+- [Configure the interpreter with Docker Compose](https://pleiades.io/help/pycharm/using-docker-compose-as-a-remote-interpreter.html)
+
 ## Setup
 
 ```shell
