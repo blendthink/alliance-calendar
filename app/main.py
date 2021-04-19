@@ -25,12 +25,17 @@ def save_image(url):
     file.write(response.content)
     file.close()
 
+def convert_to_gray_image(img):
+    gray_img = img.convert('L')
+    return gray_img
+
 
 def analyze_image():
     image = Image.open(SAVE_IMAGE_PATH)
+    gray_image = convert_to_gray_image(image)
 
     # 画像を配列に変換
-    im_list = np.array(image)
+    im_list = np.array(gray_image)
 
     # データプロットライブラリに貼り付け
     plt.imshow(im_list)
@@ -39,7 +44,7 @@ def analyze_image():
     plt.show()
 
     # テキスト抽出
-    txt = pytesseract.image_to_string(image)
+    txt = pytesseract.image_to_string(gray_image)
     print(txt)
 
 
