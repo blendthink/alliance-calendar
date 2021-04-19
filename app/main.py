@@ -2,7 +2,10 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import settings
-
+import pytesseract
+from PIL import Image
+import matplotlib.pyplot as plt
+import numpy as np
 
 def get_latest_image_url():
     response = requests.get(settings.WORKPLACE_URL)
@@ -20,8 +23,27 @@ def save_image(url):
     file.write(response.content)
     file.close()
 
+def analyze_image():
+    base = os.path.dirname(os.path.abspath(__file__))
+    name = os.path.normpath(os.path.join(base, 'downloads/latest_image.png'))
+    image = Image.open(name)
+
+    # 画像を配列に変換
+    im_list = np.array(image)
+
+    # データプロットライブラリに貼り付け
+    plt.imshow(im_list)
+
+    # 表示
+    plt.show()
+
+    # テキスト抽出
+    txt = pytesseract.image_to_string(image)
+    print(txt)
+
 
 if __name__ == '__main__':
     latest_image_url = get_latest_image_url()
     print(latest_image_url)
     save_image(latest_image_url)
+    analyze_image()
