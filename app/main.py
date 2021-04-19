@@ -7,6 +7,10 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import numpy as np
 
+FILE_PARENT_PATH = os.path.dirname(os.path.abspath(__file__))
+SAVE_IMAGE_PATH = os.path.normpath(os.path.join(FILE_PARENT_PATH, 'downloads/latest_image.png'))
+
+
 def get_latest_image_url():
     response = requests.get(settings.WORKPLACE_URL)
     soup = BeautifulSoup(response.text, "html.parser")
@@ -17,16 +21,13 @@ def get_latest_image_url():
 
 def save_image(url):
     response = requests.get(url)
-    base = os.path.dirname(os.path.abspath(__file__))
-    name = os.path.normpath(os.path.join(base, 'downloads/latest_image.png'))
-    file = open(f"{name}", "wb")
+    file = open(f"{SAVE_IMAGE_PATH}", "wb")
     file.write(response.content)
     file.close()
 
+
 def analyze_image():
-    base = os.path.dirname(os.path.abspath(__file__))
-    name = os.path.normpath(os.path.join(base, 'downloads/latest_image.png'))
-    image = Image.open(name)
+    image = Image.open(SAVE_IMAGE_PATH)
 
     # 画像を配列に変換
     im_list = np.array(image)
