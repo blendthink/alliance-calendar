@@ -10,5 +10,8 @@ RUN apt-get -y install \
     libgl1-mesa-dev;
 RUN apt-get clean
 
+RUN tesseract -v
+RUN tesseract --list-langs
+
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
