@@ -23,6 +23,8 @@ docker-compose ps
 docker-compose exec app bash
 
 # inside container
+tesseract -v
+tesseract --list-langs
 python main.py
 exit
 ```
