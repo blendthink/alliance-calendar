@@ -1,14 +1,16 @@
 import os
 import requests
 from bs4 import BeautifulSoup
+from pytesseract import Output
+
 import settings
 import pytesseract
 from PIL import Image
-import matplotlib.pyplot as plt
-import numpy as np
 
 FILE_PARENT_PATH = os.path.dirname(os.path.abspath(__file__))
 SAVE_IMAGE_PATH = os.path.normpath(os.path.join(FILE_PARENT_PATH, 'downloads/latest_image.png'))
+SAVE_BLACK_IMAGE_PATH = os.path.normpath(os.path.join(FILE_PARENT_PATH, 'downloads/latest_black_image.png'))
+SAVE_CSV_PATH = os.path.normpath(os.path.join(FILE_PARENT_PATH, 'downloads/image.csv'))
 
 
 def get_latest_image_url():
@@ -26,27 +28,24 @@ def save_image(url):
     file.close()
 
 
-def convert_to_gray_image(img):
+def convert_to_black_image(img):
     gray_img = img.convert('L')
-    return gray_img
+    black_img = gray_img.point(lambda x: 0 if x < 216 else 255)
+    black_img.save(f"{SAVE_BLACK_IMAGE_PATH}")
+    return black_img
 
 
 def analyze_image():
     image = Image.open(SAVE_IMAGE_PATH)
-    gray_image = convert_to_gray_image(image)
-
-    # 画像を配列に変換
-    im_list = np.array(gray_image)
-
-    # データプロットライブラリに貼り付け
-    plt.imshow(im_list)
-
-    # 表示
-    plt.show()
+    black_image = convert_to_black_image(image)
 
     # テキスト抽出
-    txt = pytesseract.image_to_string(gray_image)
-    print(txt)
+    text = pytesseract.image_to_string(image=black_image, lang='eng+jpn', output_type=Output.STRING)
+    file = open(f"{SAVE_CSV_PATH}", "w")
+    file.write(text)
+    file.close()
+
+    print(text)
 
 
 if __name__ == '__main__':
