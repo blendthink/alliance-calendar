@@ -25,6 +25,7 @@ def save_image(url):
     file.write(response.content)
     file.close()
 
+
 def convert_to_gray_image(img):
     gray_img = img.convert('L')
     return gray_img
