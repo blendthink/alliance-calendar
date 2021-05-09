@@ -30,6 +30,9 @@ RUN cd /usr/local/share/tessdata && \
 # setting the data prefix
 ENV TESSDATA_PREFIX=/usr/local/share/tessdata
 
+# setup openCV
+RUN apt-get install -y libgl1-mesa-dev
+
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
