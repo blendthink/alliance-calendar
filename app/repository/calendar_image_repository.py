@@ -3,6 +3,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 from urllib3.util.url import parse_url
+from pathlib import Path
 
 from app import settings
 from app.data.calendar_image_url import CalendarImageUrl
@@ -36,9 +37,9 @@ class CalendarImageRepository:
         raise FileNotFoundError
 
     @staticmethod
-    def download_calendar_image(calendar_image_url: CalendarImageUrl, image_destination_path: str):
+    def download_calendar_image(calendar_image_url: CalendarImageUrl, image_destination_path: Path):
         url = calendar_image_url.url
         response = requests.get(url)
-        file = open(f"{image_destination_path}", "wb")
+        file = image_destination_path.open(mode="wb")
         file.write(response.content)
         file.close()
