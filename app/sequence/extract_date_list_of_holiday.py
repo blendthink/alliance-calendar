@@ -9,7 +9,7 @@ import pytesseract
 from pytesseract import Output
 
 
-def fetch_date_list_of_holiday(month: int, image_destination_path: Path) -> List[datetime.date]:
+def extract_date_list_of_holiday(month: int, image_destination_path: Path) -> List[datetime.date]:
     img = cv2.imread(f'{image_destination_path}')
 
     # BGR -> グレースケール
