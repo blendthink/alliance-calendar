@@ -1,2 +1,2 @@
-from .get_calendar_image import get_calendar_image
+from .download_calendar_image import download_calendar_image
 from .fetch_date_list_of_holiday import fetch_date_list_of_holiday
