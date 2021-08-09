@@ -11,8 +11,3 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - ./app:/usr/src/app
-    command: >
-      bash -c "
-        python main.py &&
-        /bin/bash
-      "

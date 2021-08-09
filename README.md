@@ -25,7 +25,7 @@ docker-compose exec app bash
 # inside container
 tesseract -v
 tesseract --list-langs
-python main.py
+python main.py --month {month}
 exit
 ```
 
@@ -35,10 +35,4 @@ exit
 # outside container 
 docker rm $(docker ps -aq)
 docker rmi $(docker images -q)
-```
-
-## Run app
-
-```shell
-docker-compose run app
 ```
