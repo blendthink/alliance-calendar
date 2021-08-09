@@ -37,9 +37,13 @@ class CalendarImageRepository:
         raise FileNotFoundError
 
     @staticmethod
-    def fetch_calendar_image(calendar_image_url: CalendarImageUrl, image_destination_path: Path):
+    def get_calendar_image(calendar_image_url: CalendarImageUrl) -> bytes:
         url = calendar_image_url.url
         response = requests.get(url)
+        return response.content
+
+    @staticmethod
+    def save_calendar_image(image: bytes, image_destination_path: Path):
         file = image_destination_path.open(mode="wb")
-        file.write(response.content)
+        file.write(image)
         file.close()
